@@ -144,7 +144,6 @@ class UserService {
 
         const infoMsg = transporter.sendMail(message, (err, info) => {
             if (err) {
-                console.log(err)
                 return {
                     status: 500,
                     message: err
