@@ -57,6 +57,17 @@ class AuthController {
             res.status(500).json(e)
         }
     }
+    async order (req, res) {
+        try {
+            const data = UserService.order(req.body)
+            if(data.status) {
+                return res.status(data.status).json({message: data.message})
+            }
+            return res.json(data)
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
 }
 
 export default new AuthController()
