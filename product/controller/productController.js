@@ -13,8 +13,7 @@ class PostController {
 
     async getAll(req, res) {
         try {
-            const posts = await ProductService.getAll()
-            return res.json(posts)
+            return res.json(res.paginatedResults)
         } catch (e) {
             res.status(500).json(e.message)
         }

@@ -9,7 +9,7 @@ const router = new Router()
 router.post('/product', authMiddleware(['admin', 'manager']), productController.create)
 router.get('/product', paginatedResults(Product), productController.getAll)
 router.get('/product/:id', productController.getOne)
-router.get('/admin-product', authMiddleware(['admin', 'manager']), productController.getAll)
+router.get('/admin-product', authMiddleware(['admin', 'manager']), paginatedResults(Product), productController.getAll)
 router.put('/product', authMiddleware(['admin', 'manager']), productController.update)
 router.delete('/product/:id', authMiddleware(['admin', 'manager']), productController.delete)
 

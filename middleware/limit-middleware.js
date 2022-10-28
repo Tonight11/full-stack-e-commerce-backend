@@ -7,6 +7,8 @@ export default function paginatedResults(model) {
         const endIndex = page * limit
 
         const results = {}
+
+        results.totalProducts = await model.countDocuments()
         
         if (endIndex < await model.countDocuments().exec()) {
             results.next = {
@@ -23,6 +25,7 @@ export default function paginatedResults(model) {
         }
         try {
             results.results = await model.find().limit(limit).skip(startIndex).exec()
+            results.allProducts = await model.find()
             res.paginatedResults = results
             next()
         } catch (e) {

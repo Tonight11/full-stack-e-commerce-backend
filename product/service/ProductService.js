@@ -8,11 +8,6 @@ class ProductService {
         return createdPost
     }
 
-    async getAll() {
-        const posts = await Product.find()
-        return posts
-    }
-
     async getOne(id) {
         if (!id) {
             throw new Error('INVALID_ID')
