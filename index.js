@@ -26,7 +26,7 @@ app.use('/auth', router)
 app.use(productRouter)
 
 app.get('/', (req, res) => {
-    res.end('<h1>hello</h1>')
+    res.end('<h1>hello from backend</h1>')
 })
 
 
