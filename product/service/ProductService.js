@@ -12,7 +12,6 @@ class ProductService {
 		const fileName = await cloudinary.uploader.upload(file, {
 			folder: 'products',
 		});
-		console.log(fileName);
 		const createdPost = await Product.create({
 			...post,
 			picture: {
