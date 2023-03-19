@@ -27,7 +27,7 @@ app.use('/auth', router);
 app.use(productRouter);
 
 app.get('/', (req, res) => {
-	res.end('<h1>hello from backend</h1>');
+	res.end(`<h1>hello from backend</h1> ${process.env.CLIENT_URL}`);
 });
 
 async function startApp() {
