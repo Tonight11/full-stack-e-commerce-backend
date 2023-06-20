@@ -93,67 +93,52 @@ class UserService {
     }
 
     async order(data) {
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_ACC,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
+  try {
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_ACC,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-        let message = {
-            from: data.email,
-            to: process.env.EMAIL_ACC,
-            subject: `NEW ORDER!!! From ${data.email}`,
-            html:
-                `   
-                <h2>${data.name} ordered a ${data.products}</h2>
-                        <table 
-                        style="
-                                border-collapse: collapse;
-                                margin: 25px 0;
-                                font-size: 0.9em;
-                                min-width: 400px;
-                                box-shadow: 0 0 20px rgba(0,0,0,0.15)
-                        ">
-                        <thead>
-                            <tr 
-                                style="background-color: #009879;
-                                    color: #ffffff;
-                                    text-align: left;
-                                    border-bottom: 1px solid #dddddd;
-                                    "
-                                >
-                                <th>Number</th>
-                                <th>Address</th>
-                                <th>Payment method</th>
-                                <th>Total sum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid #dddddd">
-                                <td>${data.phone}</td>
-                                <td>${data.address}</td>
-                                <td>${data.payment}</td>
-                                <td>${data.sum}</td>
-                            </tr>
-                        </tbody>
-                    </table>     
-                `
-        };
+    let message = {
+      from: data.email,
+      to: process.env.EMAIL_ACC,
+      subject: `NEW ORDER!!! From ${data.email}`,
+      html: `
+        <h2>${data.name} ordered a ${data.products}</h2>
+        <table style="border-collapse: collapse; margin: 25px 0; font-size: 0.9em; min-width: 400px; box-shadow: 0 0 20px rgba(0,0,0,0.15)">
+          <thead>
+            <tr style="background-color: #009879; color: #ffffff; text-align: left; border-bottom: 1px solid #dddddd;">
+              <th>Number</th>
+              <th>Address</th>
+              <th>Payment method</th>
+              <th>Total sum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #dddddd">
+              <td>${data.phone}</td>
+              <td>${data.address}</td>
+              <td>${data.payment}</td>
+              <td>${data.sum}</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    };
 
-        const infoMsg = transporter.sendMail(message, (err, info) => {
-            if (err) {
-                return {
-                    status: 500,
-                    message: err
-                }
-            }
-            return info
-        })
+    const info = await transporter.sendMail(message);
+    return info;
+  } catch (error) {
+    return {
+      status: 500,
+      message: error.message,
+    };
+  }
+}
 
-        return infoMsg
-    }
 }
 
 
